@@ -1,3 +1,8 @@
-<?php namespace Devfactory\Minify\Exceptions;
+<?php
 
-class FileNotExistException extends \Exception {}
+namespace PerryvanderMeer\Minify\Exceptions;
+
+class FileNotExistException extends \Exception
+{
+	//
+}

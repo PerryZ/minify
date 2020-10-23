@@ -1,3 +1,8 @@
-<?php  namespace Devfactory\Minify\Exceptions;
+<?php
 
-class DirNotWritableException extends \Exception {}
+namespace PerryvanderMeer\Minify\Exceptions;
+
+class DirNotWritableException extends \Exception
+{
+	//
+}

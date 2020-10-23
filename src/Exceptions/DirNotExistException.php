@@ -1,3 +1,8 @@
-<?php namespace Devfactory\Minify\Exceptions;
+<?php
 
-class DirNotExistException extends \Exception {}
+namespace PerryvanderMeer\Minify\Exceptions;
+
+class DirNotExistException extends \Exception
+{
+	//
+}

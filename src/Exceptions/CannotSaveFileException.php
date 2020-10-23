@@ -1,3 +1,8 @@
-<?php  namespace Devfactory\Minify\Exceptions;
+<?php
 
-class CannotSaveFileException extends \Exception{}
+namespace PerryvanderMeer\Minify\Exceptions;
+
+class CannotSaveFileException extends \Exception
+{
+	//
+}

@@ -1,58 +1,22 @@
-<?php  namespace Devfactory\Minify\Providers;
+<?php
 
-use Devfactory\Minify\Exceptions\CannotRemoveFileException;
-use Devfactory\Minify\Exceptions\CannotSaveFileException;
-use Devfactory\Minify\Exceptions\DirNotExistException;
-use Devfactory\Minify\Exceptions\DirNotWritableException;
-use Devfactory\Minify\Exceptions\FileNotExistException;
+namespace PerryvanderMeer\Minify\Providers;
+
+use PerryvanderMeer\Minify\Exceptions\{CannotRemoveFileException, CannotSaveFileException, DirNotExistException, DirNotWritableException, FileNotExistException};
+
 use Illuminate\Filesystem\Filesystem;
 use Countable;
 
 abstract class BaseProvider implements Countable
 {
-    /**
-     * @var string
-     */
     protected $outputDir;
-
-    /**
-     * @var string
-     */
     protected $appended = '';
-
-    /**
-     * @var string
-     */
     protected $filename = '';
-
-    /**
-     * @var array
-     */
-    protected $files = array();
-
-    /**
-     * @var array
-     */
-    protected $headers = array();
-
-    /**
-     * @var string
-     */
+    protected $files = [];
+    protected $headers = [];
     private $publicPath;
-
-    /**
-     * @var Illuminate\Foundation\Filesystem
-     */
     protected $file;
-
-    /**
-     * @var boolean
-     */
     private $disable_mtime;
-
-    /**
-     * @var string
-     */
     private $hash_salt;
 
     /**
@@ -105,7 +69,7 @@ abstract class BaseProvider implements Countable
     /**
      * @param  $file
      * @return void
-     * @throws \Devfactory\Minify\Exceptions\FileNotExistException
+     * @throws \PerryvanderMeer\Minify\Exceptions\FileNotExistException
      */
     public function add($file)
     {
@@ -155,7 +119,7 @@ abstract class BaseProvider implements Countable
     }
 
     /**
-     * @throws \Devfactory\Minify\Exceptions\FileNotExistException
+     * @throws \PerryvanderMeer\Minify\Exceptions\FileNotExistException
      */
     protected function appendFiles()
     {
@@ -200,8 +164,8 @@ abstract class BaseProvider implements Countable
     }
 
     /**
-     * @throws \Devfactory\Minify\Exceptions\DirNotWritableException
-     * @throws \Devfactory\Minify\Exceptions\DirNotExistException
+     * @throws \PerryvanderMeer\Minify\Exceptions\DirNotWritableException
+     * @throws \PerryvanderMeer\Minify\Exceptions\DirNotExistException
      */
     protected function checkDirectory()
     {
@@ -244,7 +208,7 @@ abstract class BaseProvider implements Countable
      */
     protected function attributes($attributes)
     {
-        $html = array();
+        $html = [];
         foreach ((array) $attributes as $key => $value)
         {
             $element = $this->attributeElement($key, $value);
@@ -280,10 +244,9 @@ abstract class BaseProvider implements Countable
     /**
      * @return string
      */
-    protected function getHashedFilename()
+    protected function getHashedFilename ()
     {
-        $publicPath = $this->publicPath;
-        return md5(implode('-', array_map(function($file) use ($publicPath) { return str_replace($publicPath, '', $file); }, $this->files)) . $this->hash_salt);
+		return md5(implode('-', array_map(fn ($file) => str_replace($this->publicPath, '', $file), $this->files)) . $this->hash_salt);
     }
 
     /**
@@ -309,7 +272,7 @@ abstract class BaseProvider implements Countable
     }
 
     /**
-     * @throws \Devfactory\Minify\Exceptions\CannotRemoveFileException
+     * @throws \PerryvanderMeer\Minify\Exceptions\CannotRemoveFileException
      */
     protected function removeOldFiles()
     {
@@ -329,10 +292,10 @@ abstract class BaseProvider implements Countable
 
     /**
      * @param $minified
-     * @return string
-     * @throws \Devfactory\Minify\Exceptions\CannotSaveFileException
+     * @throws \PerryvanderMeer\Minify\Exceptions\CannotSaveFileException
+	 * @return string
      */
-    protected function put($minified)
+    protected function put ($minified)
     {
         if(file_put_contents($this->outputDir . $this->filename, $minified) === false)
         {
@@ -345,7 +308,7 @@ abstract class BaseProvider implements Countable
     /**
      * @return string
      */
-    public function getAppended()
+    public function getAppended ()
     {
         return $this->appended;
     }
@@ -353,7 +316,7 @@ abstract class BaseProvider implements Countable
     /**
      * @return string
      */
-    public function getFilename()
+    public function getFilename ()
     {
         return $this->filename;
     }

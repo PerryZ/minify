@@ -1,19 +1,23 @@
-<?php namespace Devfactory\Minify\Providers;
+<?php
 
-use Devfactory\Minify\Contracts\MinifyInterface;
+namespace PerryvanderMeer\Minify\Providers;
+
+use PerryvanderMeer\Minify\Contracts\Minify;
 use JShrink\Minifier;
 
-class JavaScript extends BaseProvider implements MinifyInterface
+class JavaScript extends BaseProvider implements Minify
 {
     /**
-     *  The extension of the outputted file.
+     * The extension of the outputted file.
      */
     const EXTENSION = '.js';
 
     /**
+	 * Returns minified content.
+	 *
      * @return string
      */
-    public function minify()
+    public function minify () : string
     {
         $minified = Minifier::minify($this->appended);
 
@@ -21,13 +25,15 @@ class JavaScript extends BaseProvider implements MinifyInterface
     }
 
     /**
-     * @param $file
-     * @param array $attributes
+	 * Returns a HTML tag for loading the minified content.
+	 *
+     * @param string  $file
+     * @param array   $attributes
      * @return string
      */
-    public function tag($file, array $attributes)
+    public function tag (string $file, array $attributes) : string
     {
-        $attributes = array('src' => $file) + $attributes;
+        $attributes = ['src' => $file] + $attributes;
 
         return "<script {$this->attributes($attributes)}></script>" . PHP_EOL;
     }

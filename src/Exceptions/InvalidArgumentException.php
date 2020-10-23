@@ -1,3 +1,8 @@
-<?php  namespace Devfactory\Minify\Exceptions;
+<?php
 
-class InvalidArgumentException extends \Exception{}
+namespace PerryvanderMeer\Minify\Exceptions;
+
+class InvalidArgumentException extends \Exception
+{
+	//
+}
