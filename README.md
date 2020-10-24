@@ -18,7 +18,7 @@ Begin by installing this package through Composer.
 {
     "require": {
     	"PerryvanderMeer/minify": "1.0.*"
-	}
+    }
 }
 ```
 
@@ -28,20 +28,19 @@ Or use ```composer require perryvandermeer/minify```
 ### Laravel installation
 
 Then register the service provider and Facade by opening `config/app.php`
+```
+PerryvanderMeer\Minify\MinifyServiceProvider::class,
 
-    'PerryvanderMeer\Minify\MinifyServiceProvider',
-
-    'Minify'        => 'PerryvanderMeer\Minify\Facades\Minify',
-
+'Minify' => PerryvanderMeer\Minify\Facades\Minify::class,
+```
 
 Publish the config file:
 
 ```
-	php artisan vendor:publish
-
+php artisan vendor:publish --tag=minify
 ```
 
-When you've added the ```MinifyServiceProvider``` an extra ```Minify``` facade is available.
+When you've added the ```MinifyServiceProvider```, an extra ```Minify``` facade is available.
 You can use this Facade anywhere in your application
 
 #### Stylesheet
@@ -49,25 +48,29 @@ You can use this Facade anywhere in your application
 ```php
 // app/views/hello.blade.php
 
-<html>
-	<head>
-		{!! Minify::stylesheet('/css/main.css') !!}
-		// or by passing multiple files
-		{!! Minify::stylesheet(array('/css/main.css', '/css/bootstrap.css')) !!}
-		// add custom attributes
-		{!! Minify::stylesheet(array('/css/main.css', '/css/bootstrap.css'), array('foo' => 'bar')) !!}
-		// add full uri of the resource
-		{!! Minify::stylesheet(array('/css/main.css', '/css/bootstrap.css'))->withFullUrl() !!}
-		{!! Minify::stylesheet(array('//fonts.googleapis.com/css?family=Roboto')) !!}
+# Minify one file
+{!! Minify::stylesheet('/css/main.css') !!}
 
-		// minify and combine all stylesheet files in given folder
-		{!! Minify::stylesheetDir('/css/') !!}
-		// add custom attributes to minify and combine all stylesheet files in given folder
-		{!! Minify::stylesheetDir('/css/', array('foo' => 'bar', 'defer' => true)) !!}
-		// minify and combine all stylesheet files in given folder with full uri
-		{!! Minify::stylesheetDir('/css/')->withFullUrl() !!}
-	</head>
-</html>
+# Minify multiple files
+{!! Minify::stylesheet(['/css/main.css', '/css/bootstrap.css']) !!}
+
+# Add custom attributes to the HTML element
+{!! Minify::stylesheet(['/css/main.css', '/css/bootstrap.css'], ['foo' => 'bar']) !!}
+
+# Add the full resource URL to the HTML element
+{!! Minify::stylesheet(['/css/main.css', '/css/bootstrap.css'])->withFullUrl() !!}
+
+# Load an external resource
+{!! Minify::stylesheet('//fonts.googleapis.com/css?family=Roboto') !!}
+
+# Minify and combine all files in a given folder
+{!! Minify::stylesheetDir('/css/') !!}
+
+# Add custom attributes to the HTML element
+{!! Minify::stylesheetDir('/css/', ['foo' => 'bar']) !!}
+
+# Add the full resource URL to the HTML element
+{!! Minify::stylesheetDir('/css/', ['foo' => 'bar'])->withFullUrl() !!}
 ```
 
 #### Javascript
@@ -75,25 +78,27 @@ You can use this Facade anywhere in your application
 ```php
 // app/views/hello.blade.php
 
-<html>
-	<body>
-		<!-- -->
-	</body>
+# Minify one file
+{!! Minify::javascript('/js/jquery.js') !!}
 
-	{!! Minify::javascript('/js/jquery.js') !!}
-	// or by passing multiple files
-	{!! Minify::javascript(array('/js/jquery.js', '/js/jquery-ui.js')) !!}
-	// add custom attributes
-	{!! Minify::javascript(array('/js/jquery.js', '/js/jquery-ui.js'), array('bar' => 'baz')) !!}
-	// add full uri of the resource
-	{!! Minify::javascript(array('/js/jquery.js', '/js/jquery-ui.js'))->withFullUrl() !!}
-    {!! Minify::javascript(array('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')) !!}
+# Minify multiple files
+{!! Minify::javascript(['/js/jquery.js', '/js/jquery-ui.js']) !!}
 
-	// minify and combine all javascript files in given folder
-	{!! Minify::javascriptDir('/js/') !!}
-	// add custom attributes to minify and combine all javascript files in given folder
-	{!! Minify::javascriptDir('/js/', array('bar' => 'baz', 'async' => true)) !!}
-	// minify and combine all javascript files in given folder with full uri
-	{!! Minify::javascriptDir('/js/')->withFullUrl() !!}
-</html>
+# Add custom attributes to the HTML element
+{!! Minify::javascript(['/js/jquery.js', '/js/jquery-ui.js'], ['foo' => 'bar']) !!}
+
+# Add the full resource URL to the HTML element
+{!! Minify::javascript(['/js/jquery.js', '/js/jquery-ui.js'], ['foo' => 'bar'])->withFullUrl() !!}
+
+# Load an external resource
+{!! Minify::javascript('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
+
+# Minify and combine all files in a given folder
+{!! Minify::javascriptDir('/js/') !!}
+
+# Add custom attributes to the HTML element
+{!! Minify::javascriptDir('/js/', ['foo' => 'bar']) !!}
+
+# Add the full resource URL to the HTML element
+{!! Minify::javascriptDir('/js/', ['foo' => 'bar'])->withFullUrl() !!}
 ```
