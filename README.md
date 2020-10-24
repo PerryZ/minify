@@ -17,7 +17,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-    	"PerryvanderMeer/minify": "1.0.*"
+    	"PerryvanderMeer/minify": "1.*"
     }
 }
 ```
