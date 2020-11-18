@@ -35,6 +35,6 @@ class JavaScript extends BaseProvider implements Minify
     {
         $attributes = ['src' => $file] + $attributes;
 
-        return "<script {$this->attributes($attributes)}></script>" . PHP_EOL;
+        return "<script {$this->attributes($attributes)} crossorigin=\"anonymous\"></script>" . PHP_EOL;
     }
 }
