@@ -45,7 +45,7 @@ class Minify
 	 */
 	public function javascript ($file, array $attributes = [])
 	{
-		$this->provider			= new JavaScript(public_path('./'), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime']]);
+		$this->provider			= new JavaScript(public_path(), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime'], 'disable_url_correction' => $this->config['disable_url_correction']]);
 		$this->attributes		= $attributes;
 		$this->buildPath		= $this->config['js_build_path'];
 		$this->buildExtension	= 'js';
@@ -64,7 +64,7 @@ class Minify
 	 */
 	public function stylesheet ($file, array $attributes = [])
 	{
-		$this->provider			= new StyleSheet(public_path('./'), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime']]);
+		$this->provider			= new StyleSheet(public_path(), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime'], 'disable_url_correction' => $this->config['disable_url_correction']]);
 		$this->attributes		= $attributes;
 		$this->buildPath		= $this->config['css_build_path'];
 		$this->buildExtension	= 'css';
@@ -83,7 +83,7 @@ class Minify
 	 */
 	public function javascriptDir (string $dir, array $attributes = [])
 	{
-		$this->provider 		= new JavaScript(public_path('./'), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime']]);
+		$this->provider 		= new JavaScript(public_path(), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime'], 'disable_url_correction' => $this->config['disable_url_correction']]);
 		$this->attributes 		= $attributes;
 		$this->buildPath		= $this->config['js_build_path'];
 		$this->buildExtension 	= 'js';
@@ -100,7 +100,7 @@ class Minify
 	 */
 	public function stylesheetDir (string $dir, array $attributes = [])
 	{
-		$this->provider			= new StyleSheet(public_path('./'), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime']]);
+		$this->provider			= new StyleSheet(public_path(), ['hash_salt' => $this->config['hash_salt'], 'disable_mtime' => $this->config['disable_mtime'], 'disable_url_correction' => $this->config['disable_url_correction']]);
 		$this->attributes 		= $attributes;
 		$this->buildPath		= $this->config['css_build_path'];
 		$this->buildExtension 	= 'css';
@@ -120,7 +120,7 @@ class Minify
 		# Create an empty array for storing files
 		$files	= [];
 
-		$itr_obj	= new RecursiveDirectoryIterator(public_path('./') . $dir);
+		$itr_obj	= new RecursiveDirectoryIterator(public_path() . $dir);
 		$itr_obj->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
 		$dir_obj	= new RecursiveIteratorIterator($itr_obj);
 
@@ -134,7 +134,7 @@ class Minify
 				&& (strlen($fileinfo->getFilename()) < 30)
 			)
 			{
-				$files[] = str_replace(public_path('./'), '', $fileinfo);
+				$files[] = str_replace(public_path(), '', $fileinfo);
 			}
 		}
 
@@ -167,8 +167,9 @@ class Minify
 			$this->provider->minify();
 		}
 
-		# Only output the full url for this minifier request.
+		# Reset URL options.
 		$this->fullUrl = false;
+		$this->onlyUrl = false;
 	}
 
 	/**

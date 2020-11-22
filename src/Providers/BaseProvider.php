@@ -18,6 +18,7 @@ abstract class BaseProvider implements Countable
     protected $file;
     private $disable_mtime;
     private $hash_salt;
+    protected $disable_url_correction;
 
     /**
      * @param null $publicPath
@@ -27,8 +28,9 @@ abstract class BaseProvider implements Countable
         $this->file			= $file ?: new Filesystem;
         $this->publicPath	= $publicPath ?: $_SERVER['DOCUMENT_ROOT'];
 
-        $this->disable_mtime	= $config['disable_mtime'] ?: false;
-        $this->hash_salt		= $config['hash_salt'] ?: '';
+        $this->disable_mtime			= $config['disable_mtime'] ?: false;
+        $this->hash_salt				= $config['hash_salt'] ?: '';
+		$this->disable_url_correction 	= $config['disable_url_correction'] ?: true;
 
         $value = function($key)
         {

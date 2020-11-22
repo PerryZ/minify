@@ -96,7 +96,12 @@ class StyleSheet extends BaseProvider implements Minify
         $contentReplace     = [];
         $contentReplaceWith = [];
 
-        preg_match_all('/url\(([\s])?([\"|\'])?(.*?)([\"|\'])?([\s])?\)/i', $content, $matches, PREG_PATTERN_ORDER);
+		if($this->disable_url_correction)
+		{
+            return $content;
+        }
+
+		preg_match_all('/url\(([\s])?([\"|\'])?(.*?)([\"|\'])?([\s])?\)/i', $content, $matches, PREG_PATTERN_ORDER);
 
         if(!count($matches))
 		{

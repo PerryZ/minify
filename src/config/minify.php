@@ -78,5 +78,16 @@ return [
 	| value. By default if empty HTTP_HOST would be used.
 	|
 	*/
-	'base_url' => ''
+	'base_url' => '',
+
+	/*
+    |--------------------------------------------------------------------------
+    | Disable URL Correction for CSS
+    |--------------------------------------------------------------------------
+    |
+    | By default the ALL url('') declarations in CSS files are transformed to
+    | absolute addresses. Set to true to disable URL correction.
+    |
+    */
+    'disable_url_correction' => true,
 ];
